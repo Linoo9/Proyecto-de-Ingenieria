@@ -1,0 +1,31 @@
+
+public static void main(String[] args) {
+
+
+  try {
+    URL url = new URL (https://opendata.aemet.es/opendata/api/prediccion/especifica/montaña/pasada/area/mad2);
+    import java.net.HttpURLConnection;
+    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    conn.setRequestMethod("GET");
+    conn.connect();
+
+    int responseCode = conn.getResponseCode();
+    if (responseCode !=200) {
+
+  }else {
+    import java.util.Scanner;
+    Scanner scan = new Scanner(url.openStream());
+    String info=" ";
+
+    while(scan.hasNext()) {
+    info=scan.nextLine();
+}
+    scan.close();
+    System.out.println(info);
+}
+
+  }catch (Excepcion e) {
+      e.printStackTrace();
+  }
+  }
+  }
