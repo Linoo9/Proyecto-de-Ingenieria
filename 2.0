@@ -1,0 +1,41 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class AplicacionClima {
+    public static void main(String[] args) {
+        try {
+            // URL de la API del proveedor de servicios climáticos
+            String apiUrl = https://opendata.aemet.es/opendata/api/valores/climatologicos/diarios/datos/fechaini/2023-05-10T00%3A00%3A00UTC/fechafin/2023-05-11T23%3A59%3A50UTC/estacion/8223%20MADRID%2FCUATRO%20VIENTOS%20690
+            ?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaW5vYWxtYXphbjFAZ21haWwuY29tIiwianRpIjoiOTlkNTQ1ZTEtNTVlMy00ZWNhLTg5MWMtZTgwZWNhM2VlNzExIiwiaXNzIjoiQUVNRVQiLCJpYXQiOjE2ODM1MDE5NzksInVzZXJJZCI6Ijk5ZDU0NWUxLTU1ZTMtNGVjYS04OTFjLWU4MGVjYTNlZTcxMSIsInJvbGUiOiIifQ.izKqKYRw5Gh8CGQs-x1h0ZWNz0xVZASTRt6gIJHbrKY";
+
+            // Establecer conexión HTTP
+            URL url = new URL(apiUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            // Leer la respuesta de la API
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            StringBuilder response = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // Procesar la respuesta JSON (suponiendo que la respuesta es en formato JSON)
+            // Aquí debes parsear y extraer los datos relevantes de la respuesta JSON
+
+            // Cerrar la conexión
+            connection.disconnect();
+            
+            // Realizar acciones con los datos del clima obtenidos
+            // ...
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
