@@ -24,9 +24,33 @@ public class AplicacionClima {
                 response.append(line);
             }
             reader.close();
+            
+            public class Clima {
+             private double temperatura;
+             private int humedad;
+             private double presion;
+             
+             }
 
-            // Procesar la respuesta JSON (suponiendo que la respuesta es en formato JSON)
-            // Aquí debes parsear y extraer los datos relevantes de la respuesta JSON
+            try {
+           
+            Gson gson = new Gson();
+            Clima clima = gson.fromJson(response.toString(), Clima.class);
+
+            // Acceder a los datos del clima
+            double temperatura = clima.getTemperatura();
+            int humedad = clima.getHumedad();
+            double presion = clima.getPresion();
+
+            // Realizar acciones con los datos del clima obtenidos
+            System.out.println("Temperatura: " + temperatura);
+            System.out.println("Humedad: " + humedad);
+            System.out.println("Presión: " + presion);
+
+          
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
             // Cerrar la conexión
             connection.disconnect();
