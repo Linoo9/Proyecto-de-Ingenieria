@@ -8,7 +8,7 @@ public class AplicacionClima {
     public static void main(String[] args) {
         try {
             // URL de la API del proveedor de servicios climáticos
-            String apiUrl = https://opendata.aemet.es/opendata/api/valores/climatologicos/diarios/datos/fechaini/2023-05-10T00%3A00%3A00UTC/fechafin/2023-05-11T23%3A59%3A50UTC/estacion/8223%20MADRID%2FCUATRO%20VIENTOS%20690
+            String apiUrl = https://opendata.aemet.es/opendata/sh/05c20596
             ?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaW5vYWxtYXphbjFAZ21haWwuY29tIiwianRpIjoiOTlkNTQ1ZTEtNTVlMy00ZWNhLTg5MWMtZTgwZWNhM2VlNzExIiwiaXNzIjoiQUVNRVQiLCJpYXQiOjE2ODM1MDE5NzksInVzZXJJZCI6Ijk5ZDU0NWUxLTU1ZTMtNGVjYS04OTFjLWU4MGVjYTNlZTcxMSIsInJvbGUiOiIifQ.izKqKYRw5Gh8CGQs-x1h0ZWNz0xVZASTRt6gIJHbrKY";
 
             // Establecer conexión HTTP
