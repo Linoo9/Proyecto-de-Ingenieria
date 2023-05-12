@@ -1,0 +1,73 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class Proyecto_de_Ingenieria {
+    public static void main(String[] args) {
+        try {
+            // URL de la API del proveedor de servicios climáticos
+            String apiUrl = "https:opendata.aemet.es/opendata/sh/05c20596?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaW5vYWxtYXphbjFAZ21haWwuY29tIiwianRpIjoiOTlkNTQ1ZTEtNTVlMy00ZWNhLTg5MWMtZTgwZWNhM2VlNzExIiwiaXNzIjoiQUVNRVQiLCJpYXQiOjE2ODM1MDE5NzksInVzZXJJZCI6Ijk5ZDU0NWUxLTU1ZTMtNGVjYS04OTFjLWU4MGVjYTNlZTcxMSIsInJvbGUiOiIifQ.izKqKYRw5Gh8CGQs-x1h0ZWNz0xVZASTRt6gIJHbrKY";
+
+            // Establecer conexión HTTP
+            URL url = new URL(apiUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            // Leer la respuesta de la API
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            StringBuilder response = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+            
+            class Clima {
+             
+             String fechahora; //string (AAAA-MM-DDTHH-MM-SSUTC)
+             float temperaturamax;
+             float temperaturamin;
+             float vientomax;
+             float precipitaciones;
+             
+             }
+          //crear una raid donde almacenarenos los datos necasarios*****
+            try {
+           
+        //    Gson gson = new Gson();
+         //   Clima clima = gson.fromJson(response.toString(), Clima.class);
+
+            // Acceder a los datos del clima
+            
+            float temperaturamax = clima.getTemperaturamax();
+            float temperaturamin = clima.getTemperaturamin();
+            float vientomax = clima.getvientomax();
+            float precipitaciones = clima.getPrecipitaciones(); 
+            
+            
+            
+
+            // Realizar acciones con los datos del clima obtenidos
+            System.out.println("Temperaturamax: " + temperatura maxima);
+            System.out.println("Temperaturamin: " + temperatura minima);
+            System.out.println("vientomax: " + viento maximo);
+            System.out.println("Precipitaciones: " + precipitacion);
+            
+
+          
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+            // Cerrar la conexión
+            connection.disconnect();
+            
+            // Realizar acciones con los datos del clima obtenidos
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
