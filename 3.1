@@ -1,0 +1,97 @@
+package MeteorTower;
+
+import java.io.IOException;
+
+import java.net.URL;
+
+import java.net.HttpURLConnection;
+
+import java.util.Scanner;
+
+import org.json.simple.JSONArray;
+
+import org.json.simple.JSONObject;
+
+public class MeteorTower {
+	 public static void main(String[] args) {
+	        try {
+	            // URL de la API del proveedor de servicios climáticos
+	            String apiUrl = "https://opendata.aemet.es/opendata/sh/42c9a7e5?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaW5vYWxtYXphbjFAZ21haWwuY29tIiwianRpIjoiOTlkNTQ1ZTEtNTVlMy00ZWNhLTg5MWMtZTgwZWNhM2VlNzExIiwiaXNzIjoiQUVNRVQiLCJpYXQiOjE2ODM1MDE5NzksInVzZXJJZCI6Ijk5ZDU0NWUxLTU1ZTMtNGVjYS04OTFjLWU4MGVjYTNlZTcxMSIsInJvbGUiOiIifQ.izKqKYRw5Gh8CGQs-x1h0ZWNz0xVZASTRt6gIJHbrKY";
+
+	            // Establecer conexión HTTP
+	            URL url = new URL ("https://opendata.aemet.es/opendata/sh/42c9a7e5")
+;
+	            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	            conn.setRequestMethod("GET");
+	            conn.connect();
+	            
+	            int responseCode = conn.getResponseCode();
+	            if(responseCode!=200);{
+	            	throw new RuntimeException("Ocurrio un error" + responseCode);//Saber si la peticion es correcta
+	            } else {
+	            	// Leer la API
+		            StringBuilder informationString = new StringBuilder();
+		            Scanner scanner = new Scanner(url.openStream());
+		            
+		            while (scanner.hasNext()) {
+		                informationString.append(scanner.nextLine());
+		            }
+		            scanner.close();
+	            }
+	            
+		        //Declarar dependeencia de JSON(seleccionar el proyecto, 
+	            //hacer clic derecho y seleccionar Properties, luego se selecciona
+	            //la opción Java Build Path y la pestaña Libraries)
+	            
+	            JSONArray jsonArray = new JSONArray(informationString.toString()); // Declarar un JSONArray
+
+	            for (int i = 0; i < jsonArray.length(); i++) {
+	                JSONObject jsonObject = jsonArray.getJSONObject(i); // Obtener el objeto JSON en el índice i
+	                // Realizar operaciones con el objeto JSON obtenido
+	            }
+		    
+	            class Clima {
+	             
+	            String fechahora; //string (AAAA-MM-DDTHH-MM-SSUTC)
+	             float temperaturamax;
+	            float temperaturamin;
+	            float vientomax;
+	             float precipitaciones;
+	             
+	            }
+	            
+	            try {
+	           
+
+	            
+	            Object clima;
+	            float temperaturamax = clima.getTemperaturamax();
+	            float temperaturamin = ((Object) clima).getTemperaturamin();
+	         	float vientomax = ((Object) clima).getvientomax();
+	         	float precipitaciones = ((Object) clima).getPrecipitaciones(); 
+	            
+	            
+	            
+
+	            // Realizar acciones con los datos del clima obtenidos
+	         System.out.println("Temperaturamax: " + temperaturamax);
+	           System.out.println("Temperaturamin: " + temperaturamin);
+	           System.out.println("vientomax: " + vientomax);
+	           System.out.println("Precipitaciones: " + precipitaciones);
+	            
+
+	          
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+
+	            // Cerrar la conexión
+	            connection.disconnect();
+	            
+	            // Realizar acciones con los datos del clima obtenidos
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	       }
+	    }
+}
