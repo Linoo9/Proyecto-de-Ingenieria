@@ -1,0 +1,82 @@
+package Prueba2;
+		
+import java.io.IOException;
+
+import java.net.URL;
+
+import java.net.HttpURLConnection;
+
+import java.util.Scanner;
+
+import org.json.JSONArray;
+
+import org.json.JSONObject;
+
+
+public class Prueba2 {
+    public static void main(String[] args) {
+        try {
+            // URL de la API del proveedor de servicios climáticos
+            String apiUrl = "https://opendata.aemet.es/opendata/api/observacion/convencional/datos/estacion/2462?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaW5vYWxtYXphbjFAZ21haWwuY29tIiwianRpIjoiOTlkNTQ1ZTEtNTVlMy00ZWNhLTg5MWMtZTgwZWNhM2VlNzExIiwiaXNzIjoiQUVNRVQiLCJpYXQiOjE2ODM1MDE5NzksInVzZXJJZCI6Ijk5ZDU0NWUxLTU1ZTMtNGVjYS04OTFjLWU4MGVjYTNlZTcxMSIsInJvbGUiOiIifQ.izKqKYRw5Gh8CGQs-x1h0ZWNz0xVZASTRt6gIJHbrKY";
+
+            // Establecer conexión HTTP
+            URL url = new URL(apiUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            
+            int responseCode = conn.getResponseCode();
+            if (responseCode != 200) {
+                throw new RuntimeException("Ocurrio un error: " + responseCode);
+            } else {
+                // Leer la API
+                StringBuilder informationString = new StringBuilder();
+                Scanner scanner = new Scanner(url.openStream());
+                while (scanner.hasNext()) {
+                    informationString.append(scanner.nextLine());
+                }
+                scanner.close();
+                
+                // Convertir JSON string a JSONArray
+                String jsonString = informationString.toString();
+                JSONArray jsonArray = new JSONArray(jsonString);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                              
+             //    Obtener los datos del clima del objeto JSON
+                String fechahora = jsonObject.getString("fechahora");
+                float temperaturamax = (float) jsonObject.getDouble("temperaturamax");
+                float temperaturamin = (float) jsonObject.getDouble("temperaturamin");
+                float vientomax = (float) jsonObject.getDouble("vientomax");
+                float precipitaciones = (float) jsonObject.getDouble("precipitaciones");
+
+                // Crear Clima y asignar los datos obtenidos
+                  Clima clima = new Clima();
+                clima.fechahora = fechahora;
+               clima.temperaturamax = temperaturamax;
+                clima.temperaturamin = temperaturamin;
+                clima.vientomax = vientomax;
+                clima.precipitaciones = precipitaciones;
+
+                // Realizar acciones con los datos del clima 
+                System.out.println("Fecha y hora: " + clima.fechahora);
+                System.out.println("Temperatura máxima: " + clima.temperaturamax);
+                System.out.println("Temperatura mínima: " + clima.temperaturamin);
+                System.out.println("Viento máximo: " + clima.vientomax);
+                System.out.println("Precipitaciones: " + clima.precipitaciones);
+                
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static class Clima {
+        String fechahora; // string (AAAA-MM-DDTHH-MM-SSUTC)
+        float temperaturamax;
+        float temperaturamin;
+        float vientomax;
+        float precipitaciones;
+    }  
+  }
+        
+
