@@ -1,0 +1,30 @@
+package prueba3;
+		
+import java.io.InputStream;
+
+import java.net.HttpURLConnection;
+
+import java.net.URL;
+
+public class prueba3 {
+	
+    public static void main(String[] args) throws Exception {
+    
+    	URL url=new URL("https://opendata.aemet.es/opendata/api/observacion/convencional/datos/estacion/2462?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaW5vYWxtYXphbjFAZ21haWwuY29tIiwianRpIjoiOTlkNTQ1ZTEtNTVlMy00ZWNhLTg5MWMtZTgwZWNhM2VlNzExIiwiaXNzIjoiQUVNRVQiLCJpYXQiOjE2ODM1MDE5NzksInVzZXJJZCI6Ijk5ZDU0NWUxLTU1ZTMtNGVjYS04OTFjLWU4MGVjYTNlZTcxMSIsInJvbGUiOiIifQ.izKqKYRw5Gh8CGQs-x1h0ZWNz0xVZASTRt6gIJHbrKY");
+    			
+    	HttpURLConnection cx=(HttpURLConnection) url.openConnection();
+    	cx.setRequestMethod("GET");
+    	
+    	InputStream strm=cx.getInputStream();
+    	byte[] arrStream=strm.readAllBytes();
+    	
+    	String cntJson="";
+    	
+    	for(byte tmp: arrStream )
+    		cntJson+=(char)tmp;
+    	
+    	System.out.println(cntJson);
+    	
+    }
+    
+}
