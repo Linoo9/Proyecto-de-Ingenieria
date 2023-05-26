@@ -1,0 +1,146 @@
+package vhmnmj;
+
+import java.io.IOException;
+
+import java.net.HttpURLConnection;
+
+import java.net.URL;
+
+import java.util.Scanner;
+
+import org.json.JSONObject;
+
+import org.json.JSONArray;
+
+public class vhmnmj {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		String respuesta = "";
+
+		try {
+
+		
+
+		URL url = new URL("https://opendata.aemet.es/opendata/api/observacion/convencional/datos/estacion/2462?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaW5vYWxtYXphbjFAZ21haWwuY29tIiwianRpIjoiOTlkNTQ1ZTEtNTVlMy00ZWNhLTg5MWMtZTgwZWNhM2VlNzExIiwiaXNzIjoiQUVNRVQiLCJpYXQiOjE2ODM1MDE5NzksInVzZXJJZCI6Ijk5ZDU0NWUxLTU1ZTMtNGVjYS04OTFjLWU4MGVjYTNlZTcxMSIsInJvbGUiOiIifQ.izKqKYRw5Gh8CGQs-x1h0ZWNz0xVZASTRt6gIJHbrKY");
+
+		HttpURLConnection conexion = (HttpURLConnection) url.openConnection(); //crea objeto de conexion
+
+		conexion.setRequestMethod("GET"); //Metodo de conexion
+
+		conexion.connect(); //conexion
+
+		
+
+		int respuestaAPI = conexion.getResponseCode(); //respuesta de la API
+
+		
+
+		
+
+		if(respuestaAPI != 200) {
+
+		System.out.println("Error");
+
+		}else {
+
+		Scanner p = new Scanner(url.openStream()); //Escanea el output de la API
+
+		while(p.hasNext()) {
+
+		respuesta += p.nextLine(); //Guarda output en una variable
+
+		}
+
+		p.close();
+
+		System.out.println(respuesta);
+
+		JSONObject json = new JSONObject(respuesta);
+
+		System.out.println(json.getString("datos"));
+
+		}
+
+		
+
+		}catch(Exception e) {
+
+		System.out.println(e);
+
+		}
+		String respuesta2 = "";
+		try {
+												
+			URL url = new URL("https://opendata.aemet.es/opendata/sh/fc39dd1c");
+
+			HttpURLConnection conexion = (HttpURLConnection) url.openConnection(); //crea objeto de conexion
+
+			conexion.setRequestMethod("GET"); //Metodo de conexion
+
+			conexion.connect(); //conexion
+			
+			int respuestaAPI = conexion.getResponseCode(); //respuesta de la API
+			
+			if(respuestaAPI != 200) {
+
+				System.out.println("Error");
+
+				}else {
+
+				Scanner p = new Scanner(url.openStream()); //Escanea el output de la API
+
+				while(p.hasNext()) {
+
+				respuesta2 += p.nextLine(); //Guarda output en una variable
+
+				}
+
+				p.close();
+
+				System.out.println(respuesta2);			
+				
+				JSONArray jsonArray = new JSONArray(respuesta2.toString());
+				JSONObject jsonObject = jsonArray.getJSONObject(22);
+				
+				System.out.println(jsonArray.length());
+				System.out.println(jsonObject.length());
+				System.out.println(jsonObject.getString("fint"));
+				System.out.println(jsonObject.getDouble("tamax"));
+				   //    Obtener los datos del clima del objeto JSON
+             /*   String fechahora = json.getString("fint");
+                float temperaturamax = (float) json.getDouble("tamax");
+                float temperaturamin = (float) json.getDouble("tamin");
+                float vientomax = (float) json.getDouble("vmax");
+                float precipitaciones = (float) json.getDouble("prec");
+
+                // Crear Clima y asignar los datos obtenidos
+                  Clima clima = new Clima();
+                clima.fechahora = fechahora;
+               clima.temperaturamax = temperaturamax;
+                clima.temperaturamin = temperaturamin;
+                clima.vientomax = vientomax;
+                clima.precipitaciones = precipitaciones;
+
+                // Realizar acciones con los datos del clima 
+                System.out.println("Fecha y hora: " + clima.fechahora);
+                System.out.println("Temperatura máxima: " + clima.temperaturamax);
+                System.out.println("Temperatura mínima: " + clima.temperaturamin);
+                System.out.println("Viento máximo: " + clima.vientomax);
+                System.out.println("Precipitaciones: " + clima.precipitaciones);
+    */            
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static class Clima {
+        String fechahora; // string (AAAA-MM-DDTHH-MM-SSUTC)
+        float temperaturamax;
+        float temperaturamin;
+        float vientomax;
+        float precipitaciones;
+    }  
+  }
