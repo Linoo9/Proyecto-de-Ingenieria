@@ -1,0 +1,287 @@
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class prueba12 {
+	public static void main(String[] args) {
+		String respuesta = "";
+
+		try {
+
+		
+
+		URL url = new URL("https://opendata.aemet.es/opendata/api/observacion/convencional/datos/estacion/2462?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaW5vYWxtYXphbjFAZ21haWwuY29tIiwianRpIjoiOTlkNTQ1ZTEtNTVlMy00ZWNhLTg5MWMtZTgwZWNhM2VlNzExIiwiaXNzIjoiQUVNRVQiLCJpYXQiOjE2ODM1MDE5NzksInVzZXJJZCI6Ijk5ZDU0NWUxLTU1ZTMtNGVjYS04OTFjLWU4MGVjYTNlZTcxMSIsInJvbGUiOiIifQ.izKqKYRw5Gh8CGQs-x1h0ZWNz0xVZASTRt6gIJHbrKY");
+
+		HttpURLConnection conexion = (HttpURLConnection) url.openConnection(); //crea objeto de conexion
+
+		conexion.setRequestMethod("GET"); //Metodo de conexion
+
+		conexion.connect(); //conexion
+
+		
+
+		int respuestaAPI = conexion.getResponseCode(); //respuesta de la API
+
+		
+
+		
+
+		if(respuestaAPI != 200) {
+
+		System.out.println("Error");
+
+		}else {
+
+		Scanner p = new Scanner(url.openStream()); //Escanea el output de la API
+
+		while(p.hasNext()) {
+
+		respuesta += p.nextLine(); //Guarda output en una variable
+
+		}
+
+		p.close();
+
+		System.out.println(respuesta);
+
+		JSONObject json = new JSONObject(respuesta);
+
+		System.out.println(json.getString("datos"));
+
+		}
+
+		
+
+		}catch(Exception e) {
+
+		System.out.println(e);
+
+		}
+		
+		String respuesta2 = "";//resputas2 = datos de las ultimas 24 horas
+		try {
+												
+			URL url = new URL("https://opendata.aemet.es/opendata/sh/fc39dd1c");
+
+			HttpURLConnection conexion = (HttpURLConnection) url.openConnection(); //crea objeto de conexion
+
+			conexion.setRequestMethod("GET"); //Metodo de conexion
+
+			conexion.connect(); //conexion
+			
+			int respuestaAPI = conexion.getResponseCode(); //respuesta de la API
+			
+			if(respuestaAPI != 200) {
+
+				System.out.println("Error");
+
+				}else {
+
+				Scanner p = new Scanner(url.openStream()); //Escanea el output de la API
+
+				while(p.hasNext()) {
+
+				respuesta2 += p.nextLine(); //Guarda output en una variable
+
+				}
+
+				p.close();
+
+				System.out.println(respuesta2);		
+				
+				//Crear una Array para mostrar un dato concreto
+				JSONArray jsonArray = new JSONArray(respuesta2.toString());
+		        int numElementos = jsonArray.length();
+		        
+		        System.out.println(jsonArray.length());
+				
+		      //Lectura de la fecha y hora de las ultimas 24h
+		        String[] FechaHoras = new String[numElementos];
+
+		        for (int i = 0; i < numElementos; i++) {
+		            JSONObject jsonObject = jsonArray.getJSONObject(i);
+		            String FechaHora = jsonObject.getString("fint");
+		            FechaHoras[i] = FechaHora;
+		        }
+		        
+		        for (String Fecha : FechaHoras) {
+		            System.out.println("Fecha y Hora: " + Fecha);		            
+		        }		       			    
+			    //Lectura de la tmax de las ultimas 24h
+			    double[] temperaturasMaximas = new double[numElementos];			        			    
+			    for (int i = 0; i < numElementos; i++) {
+			        JSONObject jsonObject = jsonArray.getJSONObject(i);
+		            double temperaturaMaxima = jsonObject.getDouble("tamax");
+		            temperaturasMaximas[i] = temperaturaMaxima;
+		        }		        		        		        		      
+		        for (double temperatura : temperaturasMaximas) {
+		            System.out.println("Temperatura máxima: " + temperatura);
+		            }
+		        
+		      //Lectura de la tmin de las ultimas 24h
+		        double[] temperaturasMinimas = new double[numElementos];
+
+		        for (int i = 0; i < numElementos; i++) {
+		            JSONObject jsonObject = jsonArray.getJSONObject(i);
+		            double temperaturaMinima = jsonObject.getDouble("tamin");
+		            temperaturasMinimas[i] = temperaturaMinima;
+		        }
+		        
+		        for (double temperatura : temperaturasMinimas) {
+		            System.out.println("Temperatura minima: " + temperatura);		            
+		        }
+		        
+		      //Lectura de la precipitacion de lluvia de las ultimas 24h
+		        double[] PrecipitacionLluvia = new double[numElementos];
+
+		        for (int i = 0; i < numElementos; i++) {
+		            JSONObject jsonObject = jsonArray.getJSONObject(i);
+		            double Precipitacion = jsonObject.getDouble("prec");
+		            PrecipitacionLluvia[i] = Precipitacion;
+		        }
+		        
+		        for (double Precipitacion : PrecipitacionLluvia) {
+		            System.out.println("Precipitaciones: " + Precipitacion);
+		        }
+		        
+		        //Lectura de la vmax del viento ultimas 24h
+		        double[] VelocidadMaxima = new double[numElementos];
+
+		        for (int i = 0; i < numElementos; i++) {
+		            JSONObject jsonObject = jsonArray.getJSONObject(i);
+		            double Velocidad = 3.6*jsonObject.getDouble("vmax");
+		            VelocidadMaxima[i] = Velocidad;
+		        }
+		        
+		        for (double Velocidad : VelocidadMaxima) {
+		            System.out.println("VMax(Km/h): " + Velocidad);
+		        }
+		        
+		        //Datos/h en las ultimas 24h
+		        for (int i = 0; i < numElementos; i++) {
+		        	
+		        System.out.println("Fecha y Hora: " + FechaHoras[i]);
+		        System.out.println("Temperatura máxima: " + temperaturasMaximas[i]);
+				System.out.println("Temperatura minima: " + temperaturasMinimas[i]);
+				System.out.println("VMax(Km/h): " + VelocidadMaxima[i]);
+				System.out.println("Precipitaciones: " + PrecipitacionLluvia[i]);
+		        }
+			}
+		}
+				catch(Exception e) {
+
+		    		System.out.println(e);
+
+		    		}
+	String respuesta3 = "";
+	try {
+
+		
+
+		URL url = new URL("https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/28082?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaW5vYWxtYXphbjFAZ21haWwuY29tIiwianRpIjoiOTlkNTQ1ZTEtNTVlMy00ZWNhLTg5MWMtZTgwZWNhM2VlNzExIiwiaXNzIjoiQUVNRVQiLCJpYXQiOjE2ODM1MDE5NzksInVzZXJJZCI6Ijk5ZDU0NWUxLTU1ZTMtNGVjYS04OTFjLWU4MGVjYTNlZTcxMSIsInJvbGUiOiIifQ.izKqKYRw5Gh8CGQs-x1h0ZWNz0xVZASTRt6gIJHbrKY");
+
+		HttpURLConnection conexion = (HttpURLConnection) url.openConnection(); //crea objeto de conexion
+
+		conexion.setRequestMethod("GET"); //Metodo de conexion
+
+		conexion.connect(); //conexion
+		int respuestaAPI = conexion.getResponseCode(); //respuesta de la API
+
+		
+
+		
+
+		if(respuestaAPI != 200) {
+
+		System.out.println("Error");
+
+		}else {
+
+		Scanner p = new Scanner(url.openStream()); //Escanea el output de la API
+
+		while(p.hasNext()) {
+
+		respuesta3 += p.nextLine(); //Guarda output en una variable
+
+		}
+
+		p.close();
+
+		System.out.println(respuesta3);
+
+		JSONObject json = new JSONObject(respuesta3);
+
+		System.out.println(json.getString("datos"));
+
+		}
+		
+	}catch(Exception e) {
+
+		System.out.println(e);
+
+		}
+	//respuesta4 = Prediccion de las proximas 7 dias
+	
+	String respuesta4 = "";
+      
+    try {
+        URL url = new URL("https://opendata.aemet.es/opendata/sh/0226cffa");
+        HttpURLConnection conexion = (HttpURLConnection) url.openConnection();
+        conexion.setRequestMethod("GET");
+        conexion.connect();
+
+        int respuestaAPI = conexion.getResponseCode();
+
+        if (respuestaAPI != 200) {
+            System.out.println("Error");
+        } else {
+            Scanner scanner = new Scanner(url.openStream());
+            while (scanner.hasNext()) {
+                respuesta4 += scanner.nextLine();
+            }
+            scanner.close();
+
+            System.out.println(respuesta4);
+
+            JSONArray jsonArray = new JSONArray(respuesta4);              
+            JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+            // Acceder al JSONObject de prediccion
+            JSONObject prediccion = jsonObject.getJSONObject("prediccion");
+
+            // Acceder al JSONArray de días
+            JSONArray dias = prediccion.getJSONArray("dia");
+
+            // Obtener los datos que queremos
+            for (int i = 0; i < dias.length(); i++) {
+                JSONObject dia = dias.getJSONObject(i);
+
+                String fecha = dia.getString("fecha");
+
+                JSONObject temperatura = dia.getJSONObject("temperatura");
+                int temperaturaMaxima = temperatura.getInt("maxima");
+                int temperaturaMinima = temperatura.getInt("minima");
+                
+                JSONArray estadoCielo = dia.getJSONArray("estadoCielo");
+                if (estadoCielo.length() > 0) {
+                    JSONObject estadoCieloObj = estadoCielo.getJSONObject(0);
+                    String descripcion = estadoCieloObj.getString("descripcion");
+
+                System.out.println("Fecha: " + fecha);
+                System.out.println("Temperatura máxima: " + temperaturaMaxima);
+                System.out.println("Temperatura mínima: " + temperaturaMinima);
+                System.out.println("Descripción: " + descripcion);
+                System.out.println();
+            }
+        }
+    
+        }  
+    } catch (IOException e) {
+        e.printStackTrace();
+  }
+}
+}
