@@ -169,9 +169,9 @@ public class MeteoTower {
 		 //       }
 		        
 		        //Prueba de activacion de avisos por umbrales definidos
-		        //	temperaturasMaximas[1]	 = 40;     
-		        //	VelocidadMaxima[1]	 = 80;               
-		        //	PrecipitacionLluvia[1] = 60;
+		//        	temperaturasMaximas[1]	 = 40;     
+		//        	VelocidadMaxima[1]	 = 80;               
+		//        	PrecipitacionLluvia[1] = 60;
 		        
 		        //Datos/h en las ultimas 24h
 		        
@@ -508,9 +508,9 @@ public class MeteoTower {
 	        //Datos historicos
 	        
 	        //Prueba de activacion de avisos por umbrales definidos
-	       	temperaturasMaximas[1]	 = "40";     
-	        VelocidadMaxima[1]	 = "80";               
-	        PrecipitacionLluvia[1] = "60";
+	 //      	temperaturasMaximas1[0]	 = 100;     
+	 //       VelocidadMaxima1[0]	 = 100;               
+	 //       PrecipitacionLluvia1[0] = 100;
 	        		        		        	
 	        System.out.println("Historico");
 	        System.out.println("---------------------------------------");
@@ -580,4 +580,7 @@ public class MeteoTower {
 	
 	
 }
+	
+    
+
 	
