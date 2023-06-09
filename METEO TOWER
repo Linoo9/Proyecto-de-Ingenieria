@@ -411,27 +411,30 @@ public class MeteoTower {
 	            for (int k = 0; k < Precipitacion.length(); k++) {
 	                JSONObject PrecipitacionObj = Precipitacion.getJSONObject(k);
 
-	                // Verificar si existe value
+	             // Verificar si existe value
 	                
 	                if (PrecipitacionObj.has("value")) {
 	                    String precipitacion1 = PrecipitacionObj.getString("value");
 	                    String horaprecipitacion1 = PrecipitacionObj.getString("periodo");
-	                    
-	                  //Convertimos la precipitacion de una String a un double
-	                    double precipitacion2 = Double.parseDouble(precipitacion1);
-	                    
+
+	                    try {
+	                        double precipitacion2 = Double.parseDouble(precipitacion1);
+	                        
+	                        // Verificar si supera el umbral máximo para emitir un aviso de lluvia torrencial
+	                        
+	                        if (precipitacion2 >= avisoLluviaTorrencial) {
+	                            System.out.println("Precipitaciones: " + precipitacion2 + " * Aviso Lluvia Torrencial");
+	                        } else {
+	                            System.out.println("Precipitaciones: " + precipitacion2);
+	                        }
+	                    } catch (NumberFormatException e) {
+	                        System.out.println("Error");
+	                    }
+
 	                    System.out.println("Hora de precipitación: " + horaprecipitacion1);
-	                    
-	                  //Verificamos si supera el umbral maximo para emitir un aviso de lluvia torrecial
-	                    if(precipitacion2 >=avisoLluviaTorrencial) {
-	        				System.out.println("Precipitaciones: " + precipitacion2 + " * Aviso Lluvia Torrencial");
-	        	        }
-	        	        else{
-	        	        	System.out.println("Precipitaciones: " + precipitacion2);	       
-	        	        }
 	                }
 	            }
-
+	            
 	          //Accedemos al JSONArray vientoAndRachaMax
 	            JSONArray VelocidadViento = dia.getJSONArray("vientoAndRachaMax");
 
