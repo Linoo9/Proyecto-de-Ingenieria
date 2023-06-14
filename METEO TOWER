@@ -44,6 +44,7 @@ public class MeteoTower {
             System.out.println("2. Prediccion a 7 dias");
             System.out.println("3.Prediccion a 48 h");
             System.out.println("4.Historico Climatologico");
+            System.out.println("5. Salir");
             System.out.print("Introduzca una opción: ");
             opcion = entrada.nextInt();
             
@@ -61,7 +62,10 @@ public class MeteoTower {
                 case 4:
                     Historico();
                     break;
-                case 5:                    
+                case 5:  
+                	System.out.println("--------------------------------------------");
+                	System.out.println("--------------- METEO TOWER  ---------------");
+                	System.out.println("--------------------------------------------");
                     break;
                 default:
                     System.out.println("Opción inválida. Intente nuevamente.");
